@@ -4,8 +4,12 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from rest_framework.authtoken.models import Token
 import uuid
+# from uuid import uuid4
 
 class Room(models.Model):
+    id = models.IntegerField(default=0, primary_key=True)
+    # id = models.IntegerField(default=uuid, primary_key=True)
+    # id = models.UUIDField(primary_key=True, default=uuid, editable=False)
     title = models.CharField(max_length=50, default="DEFAULT TITLE")
     description = models.CharField(max_length=500, default="DEFAULT DESCRIPTION")
     n_to = models.IntegerField(default=0)
