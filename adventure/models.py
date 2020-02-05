@@ -12,16 +12,19 @@ class Room(models.Model):
     # id = models.UUIDField(primary_key=True, default=uuid, editable=False)
     title = models.CharField(max_length=50, default="DEFAULT TITLE")
     description = models.CharField(max_length=500, default="DEFAULT DESCRIPTION")
+    x_cordinate = models.IntegerField(default = 0)
+    y_cordinate = models.IntegerField(default = 0)
     n_to = models.IntegerField(default=0)
     s_to = models.IntegerField(default=0)
     e_to = models.IntegerField(default=0)
     w_to = models.IntegerField(default=0)
+    # temp = models.IntegerField(default=0)
     def connectRooms(self, destinationRoom, direction):
         destinationRoomID = destinationRoom.id
         try:
             destinationRoom = Room.objects.get(id=destinationRoomID)
         except Room.DoesNotExist:
-            print("That room does not exist")
+            print(f"That {destinationRoomID} does not exist")
         else:
             if direction == "n":
                 self.n_to = destinationRoomID
@@ -45,6 +48,8 @@ class Player(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     currentRoom = models.IntegerField(default=0)
     uuid = models.UUIDField(default=uuid.uuid4, unique=True)
+    x_cordinate = models.IntegerField(default=0)
+    y_cordinate = models.IntegerField(default=0)
     def initialize(self):
         if self.currentRoom == 0:
             self.currentRoom = Room.objects.first().id
