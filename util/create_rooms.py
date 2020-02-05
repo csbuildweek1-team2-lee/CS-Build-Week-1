@@ -396,6 +396,7 @@ class World:
         Fill up the grid, bottom to top, in a zig-zag pattern
         '''
         # Initialize the grid
+        Room.objects.all().delete()
         self.grid = [None] * size_y
         self.width = size_x
         self.height = size_y
@@ -427,7 +428,8 @@ class World:
                 room_count, room_names[room_count], room_descriptions[room_count],  x, y)
             # Save the room in the World grid
             self.grid[y][x] = room
-            # Connect the new room to the previous room
+            # Connect the new room to the previous 
+            room.save()
             if previous_room is not None:
                 previous_room.connectRooms(room, room_direction)
             # Update iteration variables
